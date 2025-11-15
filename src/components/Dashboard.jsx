@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Nvabar from './Nvabar'
 
 function Dashboard() {
   const [userCount, setUserCount] = useState(0)
@@ -24,8 +25,8 @@ useEffect(()=>{
 
   return (
     <div className='grid h-screen grid-cols-4'>
-      <div className='col-span-1 bg-cyan-700 flex justify-center'>
-        <div className='py-5'></div>
+      <div>
+        <Nvabar/>
       </div>
       <div className='col-span-3 bg-slate-200'>
         <div className='mx-5 my-3'>

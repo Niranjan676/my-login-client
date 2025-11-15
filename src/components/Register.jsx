@@ -7,6 +7,7 @@ function Register() {
   const navigate = useNavigate();
 
   const [users, setUsers] = useState({name: "", email: "", password: ""})
+  const [image, setImage] = useState(null)
   const [message, setMessage] = useState("")
 
   const handleChange = (e) =>{
@@ -15,15 +16,28 @@ function Register() {
 
   const addUser = async () =>{
     try{
-      await axios.post('http://localhost:3000/users/create', users)
-      setMessage("User registered successfully")
+
+      const formdata = new FormData();
+
+      formdata.append("name", users.name)
+      formdata.append("email", users.email)
+      formdata.append("password", users.password);
+      formdata.append("image", image);
+
+      const res = await axios.post('http://localhost:3000/users/create', formdata, {
+        headers: {"Content-Type": "multipart/form-data"}
+      })
+
+      setMessage(res.data.message)
       setUsers({name: "", email: "", password: ""})
+      setImage(null)
+
       setTimeout(()=>{
         navigate('/')
       }, 1000)
     }catch(err){
       console.log("Error", err)
-      setMessage("Error creating the user")
+      setMessage(err.response?.data?.message)
     }
   }
 
@@ -59,9 +73,13 @@ function Register() {
             <label htmlFor='email'>Enter your email address</label>
             <input type='text' id='email' name='email' className='w-full outline focus:outline-none focus:ring focus:border-blue-500 p-2 text-xl' value={users.email} onChange={handleChange}></input>
           </div>
-          <div className='flex gap-2 flex-col mb-2'>
+          <div className='flex gap-2 flex-col mb-4'>
             <label htmlFor='password'>Enter the password</label>
             <input type='password' id='password' name='password' className='w-full outline focus:outline-none focus:ring focus:border-blue-500 p-2 text-xl' value={users.password} onChange={handleChange}></input>
+          </div>
+          <div className='flex gap-2 flex-col mb-2'>
+            <label >Upload an Image</label>
+            <input type='file' accept="image/*" onChange={(e)=>setImage(e.target.files[0])}></input>
           </div>
           {message && <p className="text-sm text-red-600 mb-3">{message}</p>}
           <p><span className='text-cyan-400 hover:underline underline-offset-3 decoration-black'><Link to='/'>click here</Link></span> to login</p>
