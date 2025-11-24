@@ -17,7 +17,7 @@ function Navbar() {
     <div className='col-span-1 bg-cyan-700 flex justify-center h-full'>
       <div className='py-5 text-white text-center'>
         <div>
-        <img
+        <img className="w-20 h-20 rounded-full object-cover"
             src={
               user?.image
                 ? `http://localhost:3000/uploads/${user.image}`

@@ -20,6 +20,8 @@ function Users() {
     getUsers()
   }, [])
 
+  
+
   const openUpdateUser = (userdata) =>{
     setUpdateUser(userdata)
   }
@@ -54,7 +56,6 @@ function Users() {
                     <th className='border border-gray-500'>S.No</th>
                     <th className='border border-gray-500'>Name</th>
                     <th className='border border-gray-500'>Email</th>
-                    <th className='border border-gray-500'>Password</th>
                     <th className='border border-gray-500'>Avatar</th>
                     <th className='border border-gray-500'>Edit</th>
                     <th className='border border-gray-500'>Delete</th>
@@ -70,8 +71,11 @@ function Users() {
                     <td className='border border-gray-500 px-2'>{idx + 1}.</td>
                     <td className='border border-gray-500 px-2'>{userdata.name}</td>
                     <td className='border border-gray-500 px-2'>{userdata.email}</td>
-                    <td className='border border-gray-500 px-2'>{userdata.password}</td>
-                    <td className='border border-gray-500 px-2'>{userdata.avatar}</td>
+                    <td className='border border-gray-500 px-2 py-2 flex justify-center items-center'><img className= "w-16 h-16 rounded-full object-cover transition-transform duration-300 hover:scale-150" src={
+              userdata.image
+                ? `http://localhost:3000/uploads/${userdata.image}`
+                : './image/avatar/avatar.jpg'
+            } /></td>
                     <td className='border border-gray-500 px-2 py-2 text-center'><button className='w-20 bg-yellow-500 px-2 py-2' onClick={()=>openUpdateUser(userdata)}>Edit</button></td>
                     <td className='border border-gray-500 px-2 py-2 text-center'><button className='w-20 bg-red-500 text-white px-2 py-2' onClick={()=>handleDelete(userdata._id)}>Delete</button></td>
                   </tr>
